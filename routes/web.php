@@ -4,7 +4,7 @@ use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('/student');
+    return redirect('/student');
 });
 
 Route::get('/student', [StudentController::class, 'index'])
