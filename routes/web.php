@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
-// Include Student Controller
 use App\Http\Controllers\StudentController;
+// Include Student Controller
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect('/student');
@@ -16,6 +15,12 @@ Route::get('/student/add', [StudentController::class, 'create'])
     ->name('student.create');
 Route::POST('/student/add', [StudentController::class, 'store'])
     ->name('student.store');
+
+Route::get('/student/download/{id}', [StudentController::class, 'download'])
+    ->name('student.download');
+
+Route::get('/student/preview/{id}', [StudentController::class, 'preview'])
+    ->name('student.preview');
 
 Route::get('/student/{id}', [StudentController::class, 'show'])
     ->name('student.show');

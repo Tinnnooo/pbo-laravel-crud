@@ -33,6 +33,8 @@
                                 <td>NIM</td>
                                 <td>Nama</td>
                                 <td>Prodi</td>
+                                <td>Foto</td>
+
                                 <td>#</td>
                             </thead>
 
@@ -46,6 +48,9 @@
                                         <td>{{ $data->nama }}</td>
                                         <td>{{ $data->prodi }}</td>
                                         <td>
+                                            <img class="img-fluid" src="{{ asset('storage/' . $data->foto) }}" />
+                                        </td>
+                                        <td>
                                             <a href="/student/edit/{{ $data->nim }}"
                                                 class="btn btn-warning btn-sm mr-1">
                                                 <i class="bi bi-search"></i>
@@ -54,10 +59,20 @@
                                             <form method="POST" action="/student/delete/{{ $data->nim }}">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm mr-1">
+                                                <button type="submit" class="btn btn-danger btn-sm my-1">
                                                     Hapus
                                                 </button>
                                             </form>
+
+                                            <a href="/student/download/{{ $data->nim }}"
+                                                class="btn btn-primary btn-sm my-1">
+                                                <i class="bi bi-download"></i>Download
+                                            </a>
+
+                                            <a href="/student/preview/{{ $data->nim }}"
+                                                class="btn btn-info btn-sm my-1">
+                                                <i class="bi bi-eye"></i>Preview
+                                            </a>
                                         </td>
                                     </tr>
                                 @empty

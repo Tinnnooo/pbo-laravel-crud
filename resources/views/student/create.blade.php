@@ -23,12 +23,12 @@
                     <a href="/student" type="button" class="btn btn-danger float-right">Kembali</a>
                 </div>
 
-                <form action="/student/add" method="POST">
+                <form action="/student/add" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="card-body">
 
-                        @if(session('notifikasi'))
+                        @if (session('notifikasi'))
                             <div class="form-group">
                                 <div class="alert alert-{{ session('type') }}">
                                     {{ session('notifikasi') }}
@@ -39,8 +39,7 @@
                         <div class="form-group">
                             <label for="nim">NIM <b class="text-danger">*</b></label>
                             <input required placeholder="Masukkan NIM" type="text" id="nim" name="nim"
-                                class="form-control @error('nim') is-invalid @enderror"
-                                value="{{ old('nim') }}">
+                                class="form-control @error('nim') is-invalid @enderror" value="{{ old('nim') }}">
                             @error('nim')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -49,8 +48,7 @@
                         <div class="form-group">
                             <label for="nama">Nama <b class="text-danger">*</b></label>
                             <input required placeholder="Masukkan Nama" type="text" id="nama" name="nama"
-                                class="form-control @error('nama') is-invalid @enderror"
-                                value="{{ old('nama') }}">
+                                class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') }}">
                             @error('nama')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -59,9 +57,19 @@
                         <div class="form-group">
                             <label for="email">E-Mail <b class="text-danger">*</b></label>
                             <input required placeholder="Masukkan E-Mail" type="email" id="email" name="email"
-                                class="form-control @error('email') is-invalid @enderror"
-                                value="{{ old('email') }}">
+                                class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
                             @error('email')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="foto">Foto<b class="text-danger">*</b></label>
+                            <input required placeholder="Upload Foto" type="file" id="foto" name="foto"
+                                accept="image/png, image/jpg, image/jpeg"
+                                class="form-control @error('foto') is-invalid @enderror">
+                            @error('foto')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
@@ -95,14 +103,38 @@
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+
+    <script>
+        document.getElementById('foto').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const maxSize = 2 * 1024 * 1024; // 2 MB
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+
+            if (file) {
+                // Cek tipe file
+                if (!allowedTypes.includes(file.type)) {
+                    alert('Format file harus JPEG, JPG, atau PNG!');
+                    this.value = '';
+                    return;
+                }
+
+                // Cek ukuran file
+                if (file.size > maxSize) {
+                    alert('Ukuran file tidak boleh lebih dari 2 MB!');
+                    this.value = '';
+                    return;
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
